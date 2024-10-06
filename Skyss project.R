@@ -39,7 +39,38 @@ tail(df, 10)
 
 
 
+#Plotting the routes using leaflet
+
 leaflet() %>%
   addTiles() %>%
-  addPolylines(data = df, lat = ~lat, lng = ~lon, color = "#000000", opacity = 0.8, weight = 3) %>%
-  addPolylines(data = df_2, lat = ~lat, lng = ~lon, color = "#eb3434", opacity = 0.8, weight = 3) 
+  addProviderTiles(providers$   Stadia.OSMBright)%>%
+  addPolylines(
+    data = df, 
+    lat = ~lat, 
+    lng = ~lon, 
+    color = "#000000",
+    opacity = 0.9, 
+    weight = 4,
+  ) %>%
+  addPolylines(data = df_2, lat = ~lat, lng = ~lon, color = "#eb3434", opacity = 0.9, weight = 4) %>%
+  addLabelOnlyMarkers(
+    lat = 60.391128, 
+    lng = 5.279552, 
+    label = "1", 
+    labelOptions = labelOptions(
+      noHide = TRUE,
+      direction = "center",
+      textsize = "15px",
+      style = list("color" = "#000", "font-weight" = "bold", "background" = "rgba(255,255,255,1)")
+    )
+    
+  )
+
+
+# Different maps
+# Stadia.StamenTonerLite -- Black & White
+# Stadia.AlidadeSmooth -- Black and white but smoother
+# Stadia.OSMBright -- Ligner google maps - clean og har ikke for mange labels 
+# Se full liste her - https://leaflet-extras.github.io/leaflet-providers/preview/index.html
+
+

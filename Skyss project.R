@@ -4,38 +4,30 @@ install.packages("leaflet")
 library(XML)
 library(leaflet)
 
-## Data set #1 
-gpx_parsed <- htmlTreeParse(file = "Walking 2024-08-12T202527Z.gpx", useInternalNodes = TRUE)
-gpx_parsed
+## Dummy data 1 
+gpx_parsed <- htmlTreeParse(file = "linje11.gpx", useInternalNodes = TRUE)
+
 
 coords <- xpathSApply(doc = gpx_parsed, path = "//trkpt", fun = xmlAttrs)
-elevation <- xpathSApply(doc = gpx_parsed, path = "//trkpt/ele", fun = xmlValue)
 
 df <- data.frame(
   lat = as.numeric(coords["lat", ]),
-  lon = as.numeric(coords["lon", ]),
-  elevation = as.numeric(elevation)
+  lon = as.numeric(coords["lon", ])
 )
 
 head(df, 10)
 tail(df, 10)
 
 
-## Data set #2
-gpx_parsed_2 <- htmlTreeParse(file = "Walking 2024-10-05T122612Z.gpx", useInternalNodes = TRUE)
+## Dummy data 2
+gpx_parsed_2 <- htmlTreeParse(file = "Walking 2024-08-12T202527Z.gpx", useInternalNodes = TRUE)
 gpx_parsed_2
-
 coords_2 <- xpathSApply(doc = gpx_parsed_2, path = "//trkpt", fun = xmlAttrs)
-elevation_2 <- xpathSApply(doc = gpx_parsed_2, path = "//trkpt/ele", fun = xmlValue)
-
 df_2 <- data.frame(
   lat = as.numeric(coords_2["lat", ]),
-  lon = as.numeric(coords_2["lon", ]),
-  elevation = as.numeric(elevation_2)
+  lon = as.numeric(coords_2["lon", ])
 )
 
-head(df, 10)
-tail(df, 10)
 
 
 
@@ -43,25 +35,30 @@ tail(df, 10)
 
 leaflet() %>%
   addTiles() %>%
-  addProviderTiles(providers$   Stadia.OSMBright)%>%
+  addProviderTiles(providers$Stadia.AlidadeSmooth)%>%
   addPolylines(
     data = df, 
     lat = ~lat, 
     lng = ~lon, 
     color = "#000000",
     opacity = 0.9, 
-    weight = 4,
+    weight = 2,
   ) %>%
-  addPolylines(data = df_2, lat = ~lat, lng = ~lon, color = "#eb3434", opacity = 0.9, weight = 4) %>%
+  addPolylines(
+    data = df_2, 
+    lat = ~lat, 
+    lng = ~lon, 
+    color = "#eb3434", 
+    opacity = 0.9, 
+    weight = 2) %>%
   addLabelOnlyMarkers(
-    lat = 60.391128, 
-    lng = 5.279552, 
-    label = "1", 
+    lat = 60.389354, , 
+    lng = 5.339223, 
+    label = "11", 
     labelOptions = labelOptions(
       noHide = TRUE,
       direction = "center",
-      textsize = "15px",
-      style = list("color" = "#000", "font-weight" = "bold", "background" = "rgba(255,255,255,1)")
+      style = list("color" = "#000", "font-weight" = "bold","font-size" = "10px", "background" = "rgba(255,255,255,1)")
     )
     
   )
